@@ -13,7 +13,7 @@ using System.Text;
 namespace SmokeTests
 {
     [TestFixture]
-    public class GameStatisticsSmokeTest
+    public class SmokeTests
     {
         private HttpClient _client;
         private int _times;
@@ -47,7 +47,8 @@ namespace SmokeTests
         }
 
 
-        [Parallelizable(ParallelScope.Self)]
+        [NonParallelizable]
+        [Order(1)]
         [Test]
         public async Task GetGameData_ShouldReturnOkUnderMinimalLoadAsync()
         {
@@ -70,12 +71,14 @@ namespace SmokeTests
             var responses = tasks.Select(t => t.Result).ToList();
 
             // ---- ASSERT ----
+            int totalAnswers = 0;
             Assert.Multiple(async () =>
             {
                 // Verificar que todas las respuestas tengan el código de estado 200 (Ok)
                 foreach (var response in responses)
                 {
-                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+                    totalAnswers++;
+                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK), $"ERR: Respondió correctamente {totalAnswers} de {_times} Requests");
                     // Verificar que todas las respuestas tengan el contenido JSON válido
                     Assert.That(response.Content.Headers.ContentType.MediaType, Is.EqualTo("application/json"));
                     // Verificamos que el contenido de la respuesta sea una lista de objetos 
@@ -97,7 +100,8 @@ namespace SmokeTests
         }
 
 
-        [Parallelizable(ParallelScope.Self)]
+        [NonParallelizable]
+        [Order(2)]
         [Test]
         public async Task GetValidGameDataByID_ShouldReturnOkUnderMinimalLoadAsync()
         {
@@ -130,12 +134,14 @@ namespace SmokeTests
             var responses = tasks.Select(t => t.Result).ToList();
 
             // ---- ASSERT ----
+            int totalAnswers = 0;
             Assert.Multiple(async () =>
             {
                 // Verificar que todas las respuestas tengan el código de estado 200 (Ok)
                 foreach (var response in responses)
                 {
-                    Assert.That(response.StatusCode, Is.EqualTo(expected: HttpStatusCode.OK));
+                    totalAnswers++;
+                    Assert.That(response.StatusCode, Is.EqualTo(expected: HttpStatusCode.OK), $"ERR: Respondió correctamente {totalAnswers} de {_times} Requests");
                     // Verificar que todas las respuestas tengan el contenido JSON válido
                     Assert.That(response.Content.Headers.ContentType.MediaType, Is.EqualTo(expected: "application/json"));
                     // Verificamos que el contenido de la respuesta sea una lista de objetos 
@@ -154,7 +160,8 @@ namespace SmokeTests
         }
 
 
-        [Parallelizable(ParallelScope.Self)]
+        [NonParallelizable]
+        [Order(3)]
         [Test]
         public async Task PostValidGameData_ShouldReturnCreatedUnderMinimalLoadAsync()
         {
@@ -202,12 +209,14 @@ namespace SmokeTests
             var responses = tasks.Select(t => t.Result).ToList();
 
             // ---- ASSERT ----
+            int totalAnswers = 0;
             Assert.Multiple(async () =>
             {
                 // Verificar que todas las respuestas tengan el código de estado 201 (Created)
                 foreach (var response in responses)
                 {
-                    Assert.That(response.StatusCode, Is.EqualTo(expected: HttpStatusCode.Created));
+                    totalAnswers++;
+                    Assert.That(response.StatusCode, Is.EqualTo(expected: HttpStatusCode.Created), $"ERR: Respondió correctamente {totalAnswers} de {_times} Requests");
                     //responseContent = await response.Content.ReadAsStringAsync();
                     //gameData = JsonConvert.DeserializeObject<GameData>(responseContent);
                     var content = await response.Content.ReadAsStringAsync();
@@ -224,7 +233,8 @@ namespace SmokeTests
         }
 
 
-        [Parallelizable(ParallelScope.Self)]
+        [NonParallelizable]
+        [Order(4)]
         [Test]
         public async Task PutValidGameData_ShouldReturnNoContentUnderMinimalLoadAsync()
         {
@@ -275,18 +285,16 @@ namespace SmokeTests
             var responses = tasks.Select(t => t.Result).ToList();
 
             // ---- ASSERT ----
-            Assert.Multiple(async () =>
+            // Verificar que todas las respuestas tengan el código de estado 204 (NoContents)
+            int totalAnswers = 0;
+            foreach (var response in responses)
             {
-                // Verificar que todas las respuestas tengan el código de estado 204 (NoContents)
-                foreach (var response in responses)
-                {
-                    Assert.That(response.StatusCode, Is.EqualTo(expected: HttpStatusCode.NoContent));
-                }
-            });
+                Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent), $"ERR: Respondió correctamente {totalAnswers} de {_times} Requests");
+            }
         }
 
 
-        [Parallelizable(ParallelScope.Self)]
+        [NonParallelizable]
         [Test]
         public async Task DeleteUnvalidGameDataByID_ShouldReturnNotFoundUnderMinimalLoadAsync()
         {
@@ -324,9 +332,11 @@ namespace SmokeTests
                 // Verificar que todas las respuestas tengan el código de estado 404 (NotFound)
                 string content;
                 JToken parseContentToJson;
+                int total_answer = 0;
                 foreach (var response in responses)
                 {
-                    Assert.That(response.StatusCode, Is.EqualTo(expected: HttpStatusCode.NotFound));
+                    total_answer += 1;
+                    Assert.That(response.StatusCode, Is.EqualTo(expected: HttpStatusCode.NotFound), $"ERR: Respondió correctamente {total_answer} de {_times} Requests");
                     // Verificamos que el contenido de la respuesta sea una lista de objetos 
                     // JSON válidos y tenga la estructura esperada usando FluentAssertions
                     content = await response.Content.ReadAsStringAsync();
