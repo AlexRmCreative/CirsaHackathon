@@ -7,11 +7,6 @@ class Program
     static int iRequest = 5;
     static double elapsedSeconds = 0;
     static List<DateTime> startTimes = new List<DateTime>();
-
-    const int ErrorDelayMilliseconds = 15000;
-    const double GoodThreshold = 0.375;
-    const double BadThreshold = 0.625;
-
     static string apiUrl = "http://localhost:5212/gamedata";
 
     static async Task StartMenu()
@@ -66,6 +61,7 @@ class Program
             if (key != ConsoleKey.Escape)
             {
                 await RunLoadTestIteration();
+                await Task.Delay(1000);
                 if (key == ConsoleKey.UpArrow)
                 {
                     nRequest += iRequest;
@@ -88,31 +84,38 @@ class Program
     {
         Console.Clear();
         Console.WriteLine("Presiona la flecha hacia arriba para aumentar o hacia abajo para disminuir las peticiones por segundo. Presiona Esc para volver al menú principal.");
+
         while (true)
         {
             await RunLoadTestIteration();
-            var key = Console.ReadKey().Key;
 
-            if (key != ConsoleKey.Escape)
+            if (Console.KeyAvailable)
             {
-                if (key == ConsoleKey.UpArrow)
+                var key = Console.ReadKey().Key;
+
+                if (key != ConsoleKey.Escape)
                 {
-                    nRequest += iRequest;
+                    if (key == ConsoleKey.UpArrow)
+                    {
+                        nRequest += iRequest;
+                    }
+                    else if (key == ConsoleKey.DownArrow && nRequest > iRequest)
+                    {
+                        nRequest -= iRequest;
+                    }
+
+                    UpdateConsole();
+                    Console.WriteLine($"Respuesta recibida en {elapsedSeconds} segundos");
+                    Console.WriteLine($"Se están enviando {nRequest} peticiones a la API POR SEGUNDO...");
                 }
-                else if (key == ConsoleKey.DownArrow && nRequest > iRequest)
+                else
                 {
-                    nRequest -= iRequest;
+                    break;
                 }
-                UpdateConsole();
-                Console.WriteLine($"Respuesta recibida en {elapsedSeconds} segundos");
-                Console.WriteLine($"Se están enviando {nRequest} peticiones a la API constantemente...");
-            }
-            else
-            {
-                break;
             }
         }
     }
+
 
     static void UpdateConsole()
     {
@@ -167,26 +170,26 @@ class Program
         }
     }
 
-    static async void HandleError(Exception ex)
+    static void HandleError(Exception ex)
     {
         Console.WriteLine($"Error: {ex.Message}");
-        Console.WriteLine($"La aplicación se cerrará en {ErrorDelayMilliseconds / 1000} segundos.");
-
-        // Utiliza Task.Run para evitar bloquear la tarea principal
-        await Task.Run(() => Task.Delay(ErrorDelayMilliseconds));
+        Task.Delay(15000).Wait();
         Environment.Exit(1);
     }
 
 
     static void EvaluateResponseTime(double responseTimeSeconds)
     {
+        double goodThreshold = 0.375; // Tiempo de respuesta considerado "bueno" en segundos
+        double badThreshold = 0.625;  // Tiempo de respuesta considerado "malo" en segundos
+
         Console.Write("Calidad del tiempo de respuesta: ");
 
-        if (responseTimeSeconds <= GoodThreshold)
+        if (responseTimeSeconds <= goodThreshold)
         {
             Console.WriteLine("Bueno");
         }
-        else if (responseTimeSeconds <= BadThreshold)
+        else if (responseTimeSeconds <= badThreshold)
         {
             Console.WriteLine("Malo");
         }
