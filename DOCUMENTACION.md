@@ -223,4 +223,13 @@ FluentAssertions.Json
 NUnit
 ```
 
-3. Seguir el paso a paso de uso de cada solución que se encuentra en la parte superior
+3. Seguir el paso a paso de uso de cada solución que se encuentra en la parte superior, explicando cada test y programa en detalle
+
+### Contacto
+
+Si tienes alguna pregunta o feedback sobre el proyecto, por favor contactanos. Estaremos agradecidos 😊
+
+## Autores
+
+ - [gperezz11](https://github.com/gperezz11)
+ - [AlexRm Creative](https://github.com/AlexRmCreative)
