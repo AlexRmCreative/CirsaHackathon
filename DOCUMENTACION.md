@@ -83,46 +83,57 @@ smokeTest.TearDown();
 
 
 ## Average Load testing:
-### Resumen:
-The `Program` class represents a C# console application that performs load testing on a specified API. It provides a menu with options for manual or automatic load testing, allowing the user to increase or decrease the number of requests per second. The class also evaluates the response time of the API and displays the quality of the response.
+## Summary
+The `Program` class is a C# console application that allows the user to select and call different endpoints of a game data API. It provides options for manual and automatic load testing of the API endpoints.
 
 ## Example Usage
 ```csharp
-// Create an instance of the Program class
-Program program = new Program();
-
-// Start the menu
-await program.StartMenu();
+// Select an endpoint to call
+// Press the up or down arrow to navigate through the options
+// Press Enter to select an option
+// Select a test type (manual or automatic)
+// Press the up or down arrow to navigate through the options
+// Press Enter to select a test type
+// For manual load testing:
+// Press the up or down arrow to increase or decrease the number of requests per second
+// Press Enter to send the requests
+// For automatic load testing:
+// Press the up or down arrow to increase or decrease the number of requests per second
+// Requests will be automatically sent without pressing Enter
+// Press Esc to exit the application
 ```
 
 ## Code Analysis
 ### Main functionalities
-- Provides a menu for selecting manual or automatic load testing
-- Allows the user to increase or decrease the number of requests per second
-- Performs load testing by sending multiple HTTP requests to the specified API
-- Evaluates the response time of the API and displays the quality of the response
+- Allows the user to select and call different endpoints of a game data API
+- Provides options for manual and automatic load testing of the API endpoints
 ___
 ### Methods
-- `StartMenu()`: Displays the menu options and handles user input to start manual or automatic load testing.
-- `RunLoadTest()`: Performs manual load testing by allowing the user to increase or decrease the number of requests per second.
-- `RunAutomaticLoadTest()`: Performs automatic load testing by continuously increasing or decreasing the number of requests per second.
-- `UpdateConsole()`: Updates the console with the current number of requests and the quality of the response time.
-- `RunLoadTestIteration()`: Performs a single iteration of load testing by sending multiple HTTP requests to the API.
-- `MakeRequest()`: Sends an HTTP request to the API and calculates the response time.
-- `HandleError()`: Handles any errors that occur during load testing and displays an error message.
-- `EvaluateResponseTime()`: Evaluates the response time of the API and displays the quality of the response.
+- `SelectEndpointCall()`: Allows the user to select an endpoint to call
+- `SelectTestType()`: Allows the user to select a test type (manual or automatic)
+- `RunLoadTest()`: Runs a manual load test by sending requests to the selected endpoint
+- `RunAutomaticLoadTest()`: Runs an automatic load test by continuously sending requests to the selected endpoint
+- `CallSelectedEndpoint()`: Calls the selected endpoint based on the user's choice
+- `UpdateConsole()`: Updates the console with the current number of requests and response time
+- `RunLoadTestIteration()`: Runs a single iteration of the load test by sending multiple requests to the API
+- `MakeRequest()`: Sends a single request to the API
+- `CallGetApiEndpoint()`: Calls the GET endpoint of the API
+- `CallGetByIdApiEndpoint()`: Calls the GET by ID endpoint of the API
+- `CallPostApiEndpoint()`: Calls the POST endpoint of the API
+- `CallPutApiEndpoint()`: Calls the PUT endpoint of the API
+- `CallDeleteApiEndpoint()`: Calls the DELETE endpoint of the API
+- `HandleError()`: Handles any errors that occur during the API calls
+- `EvaluateResponseTime()`: Evaluates the response time and determines its quality
 ___
 ### Fields
-- `nRequest`: The number of requests per second.
-- `iRequest`: The increment or decrement value for the number of requests per second.
-- `elapsedSeconds`: The elapsed time in seconds for the last load testing iteration.
-- `startTimes`: A list of start times for each request in the current load testing iteration.
-- `ErrorDelayMilliseconds`: The delay in milliseconds before the application exits after an error occurs.
-- `GoodThreshold`: The threshold value for a good response time.
-- `BadThreshold`: The threshold value for a bad response time.
-- `apiUrl`: The URL of the API to be tested.
+- `nRequest`: The number of requests to be sent per second
+- `iRequest`: The increment or decrement value for the number of requests
+- `elapsedSeconds`: The elapsed time in seconds for each request
+- `startTimes`: A list of start times for each request
+- `apiUrl`: The URL of the game data API
+- `id`: The ID to be used in the API calls
+- `selectedEndpointCall`: The index of the selected endpoint
 ___
-
 
 ## SpikeTest:
 
