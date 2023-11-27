@@ -82,57 +82,57 @@ smokeTest.TearDown();
 
 
 
-## Average Load testing:
-## Summary
-The `Program` class is a C# console application that allows the user to select and call different endpoints of a game data API. It provides options for manual and automatic load testing of the API endpoints.
+## Average Load Testing:
+## Resumen
+La clase `Program` es una aplicación de consola en C# que permite al usuario seleccionar y llamar a diferentes puntos finales de una API de datos de juegos. Ofrece opciones para realizar pruebas de carga manuales y automáticas en los puntos finales de la API.
 
-## Example Usage
+## Uso Ejemplar
 ```csharp
-// Select an endpoint to call
-// Press the up or down arrow to navigate through the options
-// Press Enter to select an option
-// Select a test type (manual or automatic)
-// Press the up or down arrow to navigate through the options
-// Press Enter to select a test type
-// For manual load testing:
-// Press the up or down arrow to increase or decrease the number of requests per second
-// Press Enter to send the requests
-// For automatic load testing:
-// Press the up or down arrow to increase or decrease the number of requests per second
-// Requests will be automatically sent without pressing Enter
-// Press Esc to exit the application
-```
+// Selecciona un punto final para llamar
+// Presiona las flechas arriba o abajo para navegar por las opciones
+// Presiona Enter para seleccionar una opción
+// Selecciona un tipo de prueba (manual o automática)
+// Presiona las flechas arriba o abajo para navegar por las opciones
+// Presiona Enter para seleccionar un tipo de prueba
+// Para pruebas manuales de carga:
+// Presiona las flechas arriba o abajo para aumentar o disminuir el número de solicitudes por segundo
+// Presiona Enter para enviar las solicitudes
+// Para pruebas automáticas de carga:
+// Presiona las flechas arriba o abajo para aumentar o disminuir el número de solicitudes por segundo
+// Las solicitudes se enviarán automáticamente sin presionar Enter
+// Presiona Esc para salir de la aplicación
 
-## Code Analysis
-### Main functionalities
-- Allows the user to select and call different endpoints of a game data API
-- Provides options for manual and automatic load testing of the API endpoints
+## Análisis de Código
+### Funcionalidades Principales
+- Permite al usuario seleccionar y llamar a diferentes puntos finales de una API de datos de juegos
+- Ofrece opciones para pruebas de carga manuales y automáticas en los puntos finales de la API
 ___
-### Methods
-- `SelectEndpointCall()`: Allows the user to select an endpoint to call
-- `SelectTestType()`: Allows the user to select a test type (manual or automatic)
-- `RunLoadTest()`: Runs a manual load test by sending requests to the selected endpoint
-- `RunAutomaticLoadTest()`: Runs an automatic load test by continuously sending requests to the selected endpoint
-- `CallSelectedEndpoint()`: Calls the selected endpoint based on the user's choice
-- `UpdateConsole()`: Updates the console with the current number of requests and response time
-- `RunLoadTestIteration()`: Runs a single iteration of the load test by sending multiple requests to the API
-- `MakeRequest()`: Sends a single request to the API
-- `CallGetApiEndpoint()`: Calls the GET endpoint of the API
-- `CallGetByIdApiEndpoint()`: Calls the GET by ID endpoint of the API
-- `CallPostApiEndpoint()`: Calls the POST endpoint of the API
-- `CallPutApiEndpoint()`: Calls the PUT endpoint of the API
-- `CallDeleteApiEndpoint()`: Calls the DELETE endpoint of the API
-- `HandleError()`: Handles any errors that occur during the API calls
-- `EvaluateResponseTime()`: Evaluates the response time and determines its quality
+### Métodos
+- `SelectEndpointCall()`: Permite al usuario seleccionar un punto final para llamar
+- `SelectTestType()`: Permite al usuario seleccionar un tipo de prueba (manual o automática)
+- `RunLoadTest()`: Ejecuta una prueba de carga manual enviando solicitudes al punto final seleccionado
+- `RunAutomaticLoadTest()`: Ejecuta una prueba de carga automática enviando continuamente solicitudes al punto final seleccionado
+- `CallSelectedEndpoint()`: Llama al punto final seleccionado según la elección del usuario
+- `UpdateConsole()`: Actualiza la consola con el número actual de solicitudes y el tiempo de respuesta
+- `RunLoadTestIteration()`: Ejecuta una única iteración de la prueba de carga enviando múltiples solicitudes a la API
+- `MakeRequest()`: Envía una única solicitud a la API
+- `CallGetApiEndpoint()`: Llama al punto final GET de la API
+- `CallGetByIdApiEndpoint()`: Llama al punto final GET por ID de la API
+- `CallPostApiEndpoint()`: Llama al punto final POST de la API
+- `CallPutApiEndpoint()`: Llama al punto final PUT de la API
+- `CallDeleteApiEndpoint()`: Llama al punto final DELETE de la API
+- `HandleError()`: Maneja cualquier error que ocurra durante las llamadas a la API
+- `EvaluateResponseTime()`: Evalúa el tiempo de respuesta y determina su calidad
 ___
-### Fields
-- `nRequest`: The number of requests to be sent per second
-- `iRequest`: The increment or decrement value for the number of requests
-- `elapsedSeconds`: The elapsed time in seconds for each request
-- `startTimes`: A list of start times for each request
-- `apiUrl`: The URL of the game data API
-- `id`: The ID to be used in the API calls
-- `selectedEndpointCall`: The index of the selected endpoint
+
+### Campos
+- `nRequest`: El número de solicitudes que se enviarán por segundo
+- `iRequest`: El valor de incremento o decremento para el número de solicitudes
+- `elapsedSeconds`: El tiempo transcurrido en segundos para cada solicitud
+- `startTimes`: Una lista de tiempos de inicio para cada solicitud
+- `apiUrl`: La URL de la API de datos de juegos
+- `id`: El ID a utilizar en las llamadas a la API
+- `selectedEndpointCall`: El índice del punto final seleccionado
 ___
 
 ## SpikeTest:
