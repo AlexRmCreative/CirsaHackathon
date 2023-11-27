@@ -192,13 +192,6 @@ ___
 ### Campos
 - `_client`: Una instancia de la clase `HttpClient` utilizada para enviar solicitudes HTTP a la API.
 
-
-
-
-
-
-
-
 ## Instalación del Proyecto
 
 Para instalar y ejecutar este proyecto, debes seguir los siguientes pasos:
@@ -212,11 +205,10 @@ git clone https://github.com/AlexRmCreative/CirsaHackathon.git
 2. Instalar los siguientes paquetes en cada solución:
 
 ```Average Load
-newtonsoft.json
 Install-Package System.Net.Http
 ```
 ```
-
+Install-Package Newtonsoft.Json
 ```
 ```Smoke Test
 coverlet.collector
