@@ -124,60 +124,62 @@ ___
 ___
 
 
-## Spike testing:
-### Resumen:
-The `SpikeTest` class is a test fixture for testing the behavior of an API endpoint related to game data. It contains several test methods that send HTTP requests to the API endpoint and assert the expected responses.
+## SpikeTest:
 
-## Example Usage
+### Resumen:
+
+La clase `SpikeTest` es un conjunto de pruebas diseñado para evaluar el comportamiento de un punto final de API relacionado con datos de juegos. Contiene varios métodos de prueba que envían solicitudes HTTP al punto final de la API y verifican las respuestas esperadas.
+
+### Ejemplo de Uso
+
 ```csharp
-// Create an instance of the `SpikeTest` class
+// Crea una instancia de la clase `SpikeTest`
 var spikeTest = new SpikeTest();
 
-// Set up the HTTP client with the base URL of the API
+// Configura el cliente HTTP con la URL base de la API
 spikeTest.Setup();
 
-// Check the availability of the API by sending a GET request to the /gamedata endpoint
+// Verifica la disponibilidad de la API enviando una solicitud GET al punto final /gamedata
 spikeTest.CheckApiAvailability();
 
-// Send multiple parallel GET requests to the /gamedata endpoint and assert the responses
+// Envía múltiples solicitudes GET en paralelo al punto final /gamedata y verifica las respuestas
 spikeTest.GetValidGameData_ShouldReturnOkUnderPikeLoadAsync();
 
-// Send multiple parallel GET requests to the /gamedata/{ID} endpoint and assert the responses
+// Envía múltiples solicitudes GET en paralelo al punto final /gamedata/{ID} y verifica las respuestas
 spikeTest.GetValidGameDataByID_ShouldReturnOkUnderPikeLoadAsync();
 
-// Send multiple parallel PUT requests to the /gamedata/{ID} endpoint and assert the responses
+// Envía múltiples solicitudes PUT en paralelo al punto final /gamedata/{ID} y verifica las respuestas
 spikeTest.PutValidGameData_ShouldReturnNoContentUnderPikeLoadAsync();
 
-// Send multiple parallel DELETE requests to the /gamedata/{ID} endpoint and assert the responses
+// Envía múltiples solicitudes DELETE en paralelo al punto final /gamedata/{ID} y verifica las respuestas
 spikeTest.DeleteUnvalidGameDataByID_ShouldReturnNotFoundUnderPikeLoadAsync();
 
-// Send multiple parallel POST requests to the /gamedata endpoint and assert the responses
+// Envía múltiples solicitudes POST en paralelo al punto final /gamedata y verifica las respuestas
 spikeTest.PostValidGameData_ShouldReturnCreatedUnderPikeLoadAsync();
 
-// Clean up the resources used by the HTTP client
+// Limpia los recursos utilizados por el cliente HTTP
 spikeTest.TearDown();
 ```
+## Análisis de Código
 
-## Code Analysis
-### Main functionalities
-- Set up the HTTP client with the base URL of the API
-- Check the availability of the API by sending a GET request to the /gamedata endpoint
-- Send multiple parallel HTTP requests to the API endpoints and assert the expected responses
-- Clean up the resources used by the HTTP client
+### Funcionalidades Principales
+- Configurar el cliente HTTP con la URL base de la API.
+- Verificar la disponibilidad de la API enviando una solicitud GET al punto final /gamedata.
+- Enviar múltiples solicitudes HTTP en paralelo a los puntos finales de la API y verificar las respuestas esperadas.
+- Limpiar los recursos utilizados por el cliente HTTP.
 ___
-### Methods
-- `Setup()`: Sets up the HTTP client with the base URL of the API.
-- `CheckApiAvailability()`: Checks the availability of the API by sending a GET request to the /gamedata endpoint and asserts that the response status code is OK.
-- `TearDown()`: Cleans up the resources used by the HTTP client.
-- `GetValidGameData_ShouldReturnOkUnderPikeLoadAsync()`: Sends multiple parallel GET requests to the /gamedata endpoint and asserts that the response status code is OK for each request.
-- `GetValidGameDataByID_ShouldReturnOkUnderPikeLoadAsync()`: Sends multiple parallel GET requests to the /gamedata/{ID} endpoint and asserts that the response status code is OK for each request.
-- `PutValidGameData_ShouldReturnNoContentUnderPikeLoadAsync()`: Sends multiple parallel PUT requests to the /gamedata/{ID} endpoint and asserts that the response status code is NoContent for each request.
-- `DeleteUnvalidGameDataByID_ShouldReturnNotFoundUnderPikeLoadAsync()`: Sends multiple parallel DELETE requests to the /gamedata/{ID} endpoint and asserts that the response status code is NotFound for each request.
-- `PostValidGameData_ShouldReturnCreatedUnderPikeLoadAsync()`: Sends multiple parallel POST requests to the /gamedata endpoint and asserts that the response status code is Created for each request.
+### Métodos
+- `Setup()`: Configura el cliente HTTP con la URL base de la API.
+- `CheckApiAvailability()`: Verifica la disponibilidad de la API enviando una solicitud GET al punto final /gamedata y verifica que el código de estado de la respuesta sea OK.
+- `TearDown()`: Limpia los recursos utilizados por el cliente HTTP.
+- `GetValidGameData_ShouldReturnOkUnderPikeLoadAsync()`: Envía múltiples solicitudes GET en paralelo al punto final /gamedata y verifica que el código de estado de la respuesta sea OK para cada solicitud.
+- `GetValidGameDataByID_ShouldReturnOkUnderPikeLoadAsync()`: Envía múltiples solicitudes GET en paralelo al punto final /gamedata/{ID} y verifica que el código de estado de la respuesta sea OK para cada solicitud.
+- `PutValidGameData_ShouldReturnNoContentUnderPikeLoadAsync()`: Envía múltiples solicitudes PUT en paralelo al punto final /gamedata/{ID} y verifica que el código de estado de la respuesta sea NoContent para cada solicitud.
+- `DeleteUnvalidGameDataByID_ShouldReturnNotFoundUnderPikeLoadAsync()`: Envía múltiples solicitudes DELETE en paralelo al punto final /gamedata/{ID} y verifica que el código de estado de la respuesta sea NotFound para cada solicitud.
+- `PostValidGameData_ShouldReturnCreatedUnderPikeLoadAsync()`: Envía múltiples solicitudes POST en paralelo al punto final /gamedata y verifica que el código de estado de la respuesta sea Created para cada solicitud.
 ___
-### Fields
-- `_client`: An instance of the `HttpClient` class used to send HTTP requests to the API.
-___
+### Campos
+- `_client`: Una instancia de la clase `HttpClient` utilizada para enviar solicitudes HTTP a la API.
 
 
 
