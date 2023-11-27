@@ -204,7 +204,7 @@ Para instalar y ejecutar este proyecto, debes seguir los siguientes pasos:
 git clone https://github.com/AlexRmCreative/CirsaHackathon.git
 ```
 
-2. Instalar los siguientes paquetes en cada solución:
+2. Instalar los siguientes paquetes en cada solución en su administrador de paquetes NuGGet:
 - Average Load
 ```Average Load
 Install-Package System.Net.Http
