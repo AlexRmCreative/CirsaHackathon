@@ -217,7 +217,7 @@ FluentAssertions.Json
 FluentAssertions
 NUnit
 ```
-- Smoke Test
+- Spike Test
 ```Spike Test
 FluentAssertions.Json
 NUnit
