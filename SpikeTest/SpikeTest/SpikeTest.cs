@@ -12,7 +12,6 @@ namespace SpykeTests
     public class SpikeTest
     {
         private HttpClient _client;
-        private int _times;
 
 
         [SetUp]
@@ -20,8 +19,7 @@ namespace SpykeTests
         {
             // Inicializar el cliente HTTP con la URL base de la API y las veces que se llamará
             _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:5000"); //Change this to your api URL
-            _times = 400;
+            _client.BaseAddress = new Uri("https://localhost:7170"); //Change this to your api URL
         }
 
 
@@ -29,7 +27,7 @@ namespace SpykeTests
         public async Task CheckApiAvailability()
         {
             var client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:5000"); //Change this to your api URL
+            client.BaseAddress = new Uri("https://localhost:7170"); //Change this to your api URL
             // Enviar una petición GET al endpoint /gamedata de la API
             var response = await client.GetAsync("/gamedata");
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
@@ -48,13 +46,13 @@ namespace SpykeTests
         public async Task GetValidGameData_ShouldReturnOkUnderPikeLoadAsync()
         {
             // ---- ARRANGE ---
-            // Crear una lista para almacenar las tareas
+            int timesToCall = 750;
             var tasks = new ConcurrentBag<Task<HttpResponseMessage>>();
             string endpointToCall = "/gamedata";
 
             // ---- ACT ----
             // Enviar tantas peticiones como _times diga al endpoint /gamedata en paralelo
-            await Parallel.ForEachAsync(Enumerable.Range(0, _times), async (i, ct) =>
+            await Parallel.ForEachAsync(Enumerable.Range(0, timesToCall), async (i, ct) =>
             {
                 var response = _client.GetAsync(endpointToCall, ct);
                 tasks.Add(response);
@@ -73,7 +71,7 @@ namespace SpykeTests
                 foreach (var response in responses)
                 {
                     totalAnswers++;
-                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK), $"ERR: Respondió correctamente {totalAnswers} de {_times} Requests");
+                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK), $"ERR: Respondió correctamente {totalAnswers} de {timesToCall} Requests");
                     Assert.That(response.Content.Headers.ContentType.MediaType, Is.EqualTo("application/json"));
                 }
             });
@@ -87,9 +85,8 @@ namespace SpykeTests
         public async Task GetValidGameDataByID_ShouldReturnOkUnderPikeLoadAsync()
         {
             // ---- ARRANGE ---
-            // Creamos una lista para almacenar las tareas
+            int timesToCall = 600;
             var tasks = new ConcurrentBag<Task<HttpResponseMessage>>();
-            //Creamos una lista con algunos IDs
             var arrayOfIDs = new String[]
             {
                 "febe6431-b71e-4571-b7e4-8fdab85fc98e"
@@ -100,7 +97,7 @@ namespace SpykeTests
 
             // ---- ACT ----
             // Enviar tantas peticiones como _times diga al endpoint /gamedata en paralelo
-            await Parallel.ForEachAsync(Enumerable.Range(0, _times), async (i, ct) =>
+            await Parallel.ForEachAsync(Enumerable.Range(0, timesToCall), async (i, ct) =>
             {
                 //Enviamos un ID válido aleatorio
                 //rIndex = random.Next(0, arrayOfIDs.Length);
@@ -123,7 +120,7 @@ namespace SpykeTests
                 foreach (var response in responses)
                 {
                     totalAnswers++;
-                    Assert.That(response.StatusCode, Is.EqualTo(expected: HttpStatusCode.OK), $"ERR: Respondió correctamente {totalAnswers} de {_times} Requests");
+                    Assert.That(response.StatusCode, Is.EqualTo(expected: HttpStatusCode.OK), $"ERR: Respondió correctamente {totalAnswers} de {timesToCall} Requests");
                     Assert.That(response.Content.Headers.ContentType.MediaType, Is.EqualTo(expected: "application/json"));
                 }
             });
@@ -131,12 +128,12 @@ namespace SpykeTests
         }
 
         [NonParallelizable]
-        [Order(4)]
+        [Order(3)]
         [Test]
         public async Task PutValidGameData_ShouldReturnNoContentUnderPikeLoadAsync()
         {
             // ---- ARRANGE ---
-            // Creamos una lista para almacenar las tareas
+            int timesToCall = 350;
             var tasks = new ConcurrentBag<Task<HttpResponseMessage>>();
             var gameDataList = new List<GameData>()
             {
@@ -159,7 +156,7 @@ namespace SpykeTests
 
             // ---- ACT ----
             // Enviar tantas peticiones como _times diga al endpoint /gamedata en paralelo
-            await Parallel.ForEachAsync(Enumerable.Range(0, _times), async (i, ct) =>
+            await Parallel.ForEachAsync(Enumerable.Range(0, timesToCall), async (i, ct) =>
             {
                 //Enviamos un GameData Object aleatorio
                 rIndex = random.Next(0, gameDataList.Count);
@@ -183,18 +180,19 @@ namespace SpykeTests
             int totalAnswers = 0;
             foreach (var response in responses)
             {
-                Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent), $"ERR: Respondió correctamente {totalAnswers} de {_times} Requests");
+                Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent), $"ERR: Respondió correctamente {totalAnswers} de {timesToCall} Requests");
             }
 
         }
 
 
         [NonParallelizable]
-        [Order(5)]
+        [Order(4)]
         [Test]
         public async Task DeleteUnvalidGameDataByID_ShouldReturnNotFoundUnderPikeLoadAsync()
         {
             // ---- ARRANGE ---
+            int timesToCall = 4000;
             // Creamos una lista para almacenar las tareas
             var tasks = new ConcurrentBag<Task<HttpResponseMessage>>();
             //Creamos una lista con algunos IDs
@@ -208,7 +206,7 @@ namespace SpykeTests
 
             // ---- ACT ----
             // Enviar tantas peticiones como _times diga al endpoint /gamedata en paralelo
-            await Parallel.ForEachAsync(Enumerable.Range(0, _times), async (i, ct) =>
+            await Parallel.ForEachAsync(Enumerable.Range(0, timesToCall), async (i, ct) =>
             {
                 //Enviamos un ID válido aleatorio
                 rIndex = random.Next(0, arrayOfIDs.Length);
@@ -232,7 +230,7 @@ namespace SpykeTests
                 foreach (var response in responses)
                 {
                     total_answer += 1;
-                    Assert.That(response.StatusCode, Is.EqualTo(expected: HttpStatusCode.NotFound), $"ERR: Respondió correctamente {total_answer} de {_times} Requests");
+                    Assert.That(response.StatusCode, Is.EqualTo(expected: HttpStatusCode.NotFound), $"ERR: Respondió correctamente {total_answer} de {timesToCall} Requests");
                     // Verificamos que el contenido de la respuesta sea una lista de objetos 
                     // JSON válidos y tenga la estructura esperada usando FluentAssertions
                     content = await response.Content.ReadAsStringAsync();
@@ -242,11 +240,12 @@ namespace SpykeTests
         }
 
         [NonParallelizable]
-        [Order(3)]
+        [Order(5)]
         [Test]
         public async Task PostValidGameData_ShouldReturnCreatedUnderPikeLoadAsync()
         {
             // ---- ARRANGE ---
+            int timesToCall = 300;
             var client = new HttpClient();
             var tasks = new ConcurrentBag<Task<HttpResponseMessage>>();
             Random random = new Random();
@@ -278,7 +277,7 @@ namespace SpykeTests
             StringContent content;
 
             // ---- ACT ----
-            await Parallel.ForEachAsync(Enumerable.Range(0, _times), async (i, ct) =>
+            await Parallel.ForEachAsync(Enumerable.Range(0, timesToCall), async (i, ct) =>
             {
                 rIndex = random.Next(0, gameDataList.Count);
                 gameDataJson = JsonConvert.SerializeObject(gameDataList[rIndex], Formatting.Indented);
@@ -297,7 +296,7 @@ namespace SpykeTests
             foreach (var response in responses)
             {
                 totalAnswers++;
-                Assert.That(response.StatusCode, Is.EqualTo(expected: HttpStatusCode.Created), $"ERR: Respondió correctamente {totalAnswers} de {_times} Requests");
+                Assert.That(response.StatusCode, Is.EqualTo(expected: HttpStatusCode.Created), $"ERR: Respondió correctamente {totalAnswers} de {timesToCall} Requests");
             }
 
         }
