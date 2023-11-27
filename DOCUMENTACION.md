@@ -188,11 +188,34 @@ ___
 
 
 
-
 ## Instalación del Proyecto
 
-...
+Para instalar y ejecutar este proyecto, debes seguir los siguientes pasos:
 
-## Decisiones Tomadas
+1. Clona o descarga el repositorio de GitHub en tu computadora. Puedes usar el botón verde "Code" que aparece en la parte superior derecha de la página del repositorio, o puedes usar el siguiente comando en una terminal:
 
-...
+```bash
+git clone https://github.com/AlexRmCreative/CirsaHackathon.git
+```
+
+2. Instalar los siguientes paquetes en cada solución:
+
+```Average Load
+newtonsoft.json
+Install-Package System.Net.Http
+```
+```
+
+```
+```Smoke Test
+coverlet.collector
+FluentAssertions.Json
+FluentAssertions
+NUnit
+```
+```Spike Test
+FluentAssertions.Json
+NUnit
+```
+
+3. Seguir el paso a paso de uso de cada solución que se encuentra en la parte superior
