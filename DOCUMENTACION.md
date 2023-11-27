@@ -205,19 +205,19 @@ git clone https://github.com/AlexRmCreative/CirsaHackathon.git
 ```
 
 2. Instalar los siguientes paquetes en cada solución:
-
+- Average Load
 ```Average Load
 Install-Package System.Net.Http
-```
-```
 Install-Package Newtonsoft.Json
 ```
+- Smoke Test
 ```Smoke Test
 coverlet.collector
 FluentAssertions.Json
 FluentAssertions
 NUnit
 ```
+- Smoke Test
 ```Spike Test
 FluentAssertions.Json
 NUnit
