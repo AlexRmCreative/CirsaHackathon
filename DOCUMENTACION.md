@@ -102,7 +102,7 @@ La clase `Program` es una aplicación de consola en C# que permite al usuario se
 // Presiona las flechas arriba o abajo para aumentar o disminuir el número de solicitudes por segundo
 // Las solicitudes se enviarán automáticamente sin presionar Enter
 // Presiona Esc para salir de la aplicación
-
+```
 ## Análisis de Código
 ### Funcionalidades Principales
 - Permite al usuario seleccionar y llamar a diferentes puntos finales de una API de datos de juegos
