@@ -11,16 +11,16 @@ namespace GameStatistics.Test.Models
 
     public class GameData
     {
-        [JsonProperty("id")]
+        [JsonProperty("id", Required = Required.AllowNull)]
         public string Id { get; set; }
 
-        [JsonProperty("gameName")]
+        [JsonProperty("gameName", Required = Required.AllowNull)]
         public string GameName { get; set; }
 
-        [JsonProperty("category")]
+        [JsonProperty("category", Required = Required.AllowNull)]
         public string Category { get; set; }
 
-        [JsonProperty("totalBets")]
+        [JsonProperty("totalBets", Required = Required.AllowNull)]
         public int TotalBets { get; set; }
 
     }
