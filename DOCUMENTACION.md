@@ -60,6 +60,7 @@ smokeTest.TearDown();
 - Publicar nuevos datos del juego y afirmar que devuelve Creado
 - Actualizar datos del juego y afirmar que devuelve NoContent
 - Eliminar datos del juego por ID y afirmar que devuelve NoEncontrado (NotFound)
+- NOTA: En caso que algún test salte una excepción de Object.Reference ejecuta el test en modo prueba/depuración, esta excepción suponemos es por los threadings
 
 ### Métodos
 
@@ -178,6 +179,7 @@ spikeTest.TearDown();
 - Verificar la disponibilidad de la API enviando una solicitud GET al punto final /gamedata.
 - Enviar múltiples solicitudes HTTP en paralelo a los puntos finales de la API y verificar las respuestas esperadas.
 - Limpiar los recursos utilizados por el cliente HTTP.
+- NOTA: En caso que algún test salte una excepción de Object.Reference ejecuta el test en modo prueba/depuración, esta excepción suponemos es por los threadings
 ___
 ### Métodos
 - `Setup()`: Configura el cliente HTTP con la URL base de la API.
